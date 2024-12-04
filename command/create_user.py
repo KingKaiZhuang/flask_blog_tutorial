@@ -8,11 +8,7 @@ from flaskblog import app, db
 from flaskblog.models import User
 
 with app.app_context():
-    users = User.query.all()
-    for user in users:
-        print(f"User: {user.username}, Email: {user.email}")
-        for post in user.posts:
-            print(f"  - Post Title: {post.title}, Content: {post.content}")
-
-
-    
+    user_1 = User(username='莊鈞凱', email='pudy6511@gmail.com', password='password')
+    db.session.add(user_1)
+    db.session.commit()
+    print("User added successfully!")
