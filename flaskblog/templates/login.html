@@ -9,8 +9,8 @@
         form.email.errors %} {{ form.email(class="form-control form-control-lg
         is-invalid") }}
         <div class="invalid-feedback">
-          {% for errors in form.email.errors %}
-          <span>{{ errors }}</span>
+          {% for error in form.email.errors %}
+          <span>{{ error }}</span>
           {% endfor %}
         </div>
         {% else %} {{ form.email(class="form-control form-control-lg") }} {%
@@ -21,8 +21,8 @@
         form.password.errors %} {{ form.password(class="form-control
         form-control-lg is-invalid") }}
         <div class="invalid-feedback">
-          {% for errors in form.password.errors %}
-          <span>{{ errors }}</span>
+          {% for error in form.password.errors %}
+          <span>{{ error }}</span>
           {% endfor %}
         </div>
         {% else %} {{ form.password(class="form-control form-control-lg") }} {%
@@ -35,16 +35,16 @@
     </fieldset>
     <div class="form-group">
       {{ form.submit(class="btn btn-outline-info") }}
+      <small class="text-muted ml-2">
+        <a href="{{ url_for('users.reset_request') }}">Forgot Password?</a>
+      </small>
     </div>
-    <small class="text-muted ml-2">
-      <a href="{{ url_for('reset_request')}}">Forgot Password?</a>
-    </small>
   </form>
 </div>
 <div class="border-top pt-3">
   <small class="text-muted">
     Need An Account?
-    <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now!</a>
+    <a class="ml-2" href="{{ url_for('users.register') }}">Sign Up Now</a>
   </small>
 </div>
 {% endblock content %}
