@@ -1,38 +1,55 @@
 {% extends "layout.html" %} {% block content %}
 <div class="content-section">
+  <!-- 登入表單 -->
   <form method="POST" action="">
+    <!-- CSRF 保護 -->
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4">Log In</legend>
+
+      <!-- 電子郵件欄位 -->
       <div class="form-group">
+        <!-- 顯示電子郵件標籤 -->
         {{ form.email.label(class="form-control-label") }} {% if
-        form.email.errors %} {{ form.email(class="form-control form-control-lg
-        is-invalid") }}
+        form.email.errors %}
+        <!-- 如果有驗證錯誤，顯示紅色框線與錯誤訊息 -->
+        {{ form.email(class="form-control form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.email.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.email(class="form-control form-control-lg") }} {%
-        endif %}
+        {% else %}
+        <!-- 如果沒有錯誤，顯示正常的輸入框 -->
+        {{ form.email(class="form-control form-control-lg") }} {% endif %}
       </div>
+
+      <!-- 密碼欄位 -->
       <div class="form-group">
+        <!-- 顯示密碼標籤 -->
         {{ form.password.label(class="form-control-label") }} {% if
-        form.password.errors %} {{ form.password(class="form-control
-        form-control-lg is-invalid") }}
+        form.password.errors %}
+        <!-- 如果有驗證錯誤，顯示紅色框線與錯誤訊息 -->
+        {{ form.password(class="form-control form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.password.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.password(class="form-control form-control-lg") }} {%
-        endif %}
+        {% else %}
+        <!-- 如果沒有錯誤，顯示正常的輸入框 -->
+        {{ form.password(class="form-control form-control-lg") }} {% endif %}
       </div>
+
+      <!-- 記住我選項 -->
       <div class="form-check">
+        <!-- 顯示複選框 -->
         {{ form.remember(class="form-check-input") }} {{
         form.remember.label(class="form-check-label") }}
       </div>
     </fieldset>
+
+    <!-- 提交按鈕與忘記密碼連結 -->
     <div class="form-group">
       {{ form.submit(class="btn btn-outline-info") }}
       <small class="text-muted ml-2">
@@ -41,6 +58,8 @@
     </div>
   </form>
 </div>
+
+<!-- 註冊連結 -->
 <div class="border-top pt-3">
   <small class="text-muted">
     Need An Account?

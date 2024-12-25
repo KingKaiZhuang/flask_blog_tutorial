@@ -1,4 +1,69 @@
 {% extends "layout.html" %} {% block content %}
-<h1>About Page</h1>
+<div class="content-section">
+  <h1 class="mb-4">About Us</h1>
+  <p class="lead">
+    Welcome to Flask Blog! We are dedicated to providing a platform for users to
+    share their thoughts, ideas, and stories with the world. Our mission is to
+    create a supportive and engaging community where everyone feels welcome to
+    contribute and interact.
+  </p>
+  <hr />
 
+  <!-- Section: Our Mission -->
+  <div class="mb-4">
+    <h2 class="mb-3">Our Mission</h2>
+    <p>
+      At Flask Blog, our mission is to empower individuals to express themselves
+      freely while fostering meaningful connections through their writing. We
+      believe that everyone has a story to tell, and we aim to provide the tools
+      and platform to make that possible.
+    </p>
+  </div>
+
+  <!-- Section: Our Features -->
+  <div class="mb-4">
+    <h2 class="mb-3">Our Features</h2>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <strong>User Profiles:</strong> Create and customize your personal
+        profile, complete with a profile picture and bio.
+      </li>
+      <li class="list-group-item">
+        <strong>Dynamic Posts:</strong> Write, edit, and share your articles
+        with a rich-text editor.
+      </li>
+      <li class="list-group-item">
+        <strong>Community Interaction:</strong> Connect with other users by
+        commenting on and liking posts.
+      </li>
+      <li class="list-group-item">
+        <strong>Secure Environment:</strong> We prioritize your data privacy and
+        security, ensuring a safe platform for everyone.
+      </li>
+    </ul>
+  </div>
+
+  <!-- Section: Contact Us -->
+  <div class="mb-4">
+    <h2 class="mb-3">Contact Us</h2>
+    <p>
+      If you have any questions, feedback, or suggestions, please feel free to
+      reach out to us:
+    </p>
+    <ul>
+      <li>
+        Email: <a href="mailto:support@flaskblog.com">support@flaskblog.com</a>
+      </li>
+      <li>Phone: +1 (555) 123-4567</li>
+      <li>Address: 123 Flask Blog Ave, Web City, WC 56789</li>
+    </ul>
+  </div>
+
+  <!-- Section: Call to Action -->
+  <div class="text-center mt-5">
+    <a class="btn btn-outline-info btn-lg" href="{{ url_for('main.home') }}"
+      >Explore the Blog</a
+    >
+  </div>
+</div>
 {% endblock content %}

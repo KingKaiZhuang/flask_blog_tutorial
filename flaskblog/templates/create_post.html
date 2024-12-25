@@ -1,34 +1,49 @@
 {% extends "layout.html" %} {% block content %}
 <div class="content-section">
+  <!-- 表單，用於創建或更新文章 -->
   <form method="POST" action="">
+    <!-- 隱藏字段，用於防篡改的 CSRF 保護 -->
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
+      <!-- 動態設置表單的標題，例如 "New Post" 或 "Update Post" -->
       <legend class="border-bottom mb-4">{{ legend }}</legend>
+
+      <!-- 標題欄位 -->
       <div class="form-group">
+        <!-- 顯示標題標籤 -->
         {{ form.title.label(class="form-control-label") }} {% if
-        form.title.errors %} {{ form.title(class="form-control form-control-lg
-        is-invalid") }}
+        form.title.errors %}
+        <!-- 如果標題欄位有錯誤，顯示錯誤訊息和紅色框線 -->
+        {{ form.title(class="form-control form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for errors in form.title.errors %}
           <span>{{ errors }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.title(class="form-control form-control-lg") }} {%
-        endif %}
+        {% else %}
+        <!-- 如果沒有錯誤，顯示正常的標題輸入框 -->
+        {{ form.title(class="form-control form-control-lg") }} {% endif %}
       </div>
+
+      <!-- 內容欄位 -->
       <div class="form-group">
+        <!-- 顯示內容標籤 -->
         {{ form.content.label(class="form-control-label") }} {% if
-        form.content.errors %} {{ form.content(class="form-control
-        form-control-lg is-invalid") }}
+        form.content.errors %}
+        <!-- 如果內容欄位有錯誤，顯示錯誤訊息和紅色框線 -->
+        {{ form.content(class="form-control form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for errors in form.content.errors %}
           <span>{{ errors }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.content(class="form-control form-control-lg") }} {%
-        endif %}
+        {% else %}
+        <!-- 如果沒有錯誤，顯示正常的內容輸入框 -->
+        {{ form.content(class="form-control form-control-lg") }} {% endif %}
       </div>
     </fieldset>
+
+    <!-- 提交按鈕 -->
     <div class="form-group">
       {{ form.submit(class="btn btn-outline-info") }}
     </div>

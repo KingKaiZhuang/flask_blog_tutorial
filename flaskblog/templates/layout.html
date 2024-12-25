@@ -1,84 +1,196 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <!-- 基本元標籤 -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- 引入 Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <!-- 自訂樣式 -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
 
+    <!-- 動態標題 -->
     {% if title %}
-        <title>Flask Blog - {{ title }}</title>
+    <title>Flask Blog - {{ title }}</title>
     {% else %}
-        <title>Flask Blog</title>
+    <title>Flask Blog</title>
     {% endif %}
-</head>
-<body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="/">Flask Blog</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
-              <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              {% if current_user.is_authenticated %}
-                <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">New Post</a>
-                <a class="nav-item nav-link" href="{{ url_for('users.account') }}">Account</a>
-                <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a>
-              {% else %}
-                <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
-                <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
-              {% endif %}
+
+    <!-- Lottie 動畫支援 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+    <style>
+      /* Loader 样式 */
+      #loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f8f9fa;
+        z-index: 9999;
+      }
+
+      .lottie-animation {
+        width: 150px;
+        height: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Lottie 動畫容器 -->
+    <div id="loader">
+      <div class="lottie-animation"></div>
+    </div>
+
+    <!-- 主內容容器 -->
+    <div id="content">
+      <!-- 頁首導航 -->
+      <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+          <div class="container">
+            <a class="navbar-brand mr-4" href="/">Flask Blog</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarToggle"
+              aria-controls="navbarToggle"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+                <!-- 左側導航連結 -->
+                <a class="nav-item nav-link" href="{{ url_for('main.home') }}"
+                  >Home</a
+                >
+                <a class="nav-item nav-link" href="{{ url_for('main.about') }}"
+                  >About</a
+                >
+              </div>
+              <!-- 右側導航連結 -->
+              <div class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                <a
+                  class="nav-item nav-link"
+                  href="{{ url_for('posts.new_post') }}"
+                  >New Post</a
+                >
+                <a
+                  class="nav-item nav-link"
+                  href="{{ url_for('users.account') }}"
+                  >Account</a
+                >
+                <a
+                  class="nav-item nav-link"
+                  href="{{ url_for('users.logout') }}"
+                  >Logout</a
+                >
+                {% else %}
+                <a class="nav-item nav-link" href="{{ url_for('users.login') }}"
+                  >Login</a
+                >
+                <a
+                  class="nav-item nav-link"
+                  href="{{ url_for('users.register') }}"
+                  >Register</a
+                >
+                {% endif %}
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
-    </header>
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                  {{ message }}
-                </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
-          {% block content %}{% endblock %}
-        </div>
-        <div class="col-md-4">
-          <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.
+        </nav>
+      </header>
+
+      <!-- 主內容 -->
+      <main role="main" class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <!-- 顯示 Flask 的 Flash 消息 -->
+            {% with messages = get_flashed_messages(with_categories=true) %} {%
+            if messages %} {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %} {% endif %} {% endwith %} {% block content %}{%
+            endblock %}
+          </div>
+          <!-- 側邊欄 -->
+          <div class="col-md-4">
+            <div class="content-section">
+              <h3>Our Sidebar</h3>
+              <p class="text-muted">
+                You can put any information here you'd like.
+              </p>
               <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
+                <li class="list-group-item list-group-item-light">
+                  Latest Posts
+                </li>
+                <li class="list-group-item list-group-item-light">
+                  Announcements
+                </li>
                 <li class="list-group-item list-group-item-light">Calendars</li>
                 <li class="list-group-item list-group-item-light">etc</li>
               </ul>
-            </p>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
 
+    <!-- 必要的 JavaScript -->
+    <!-- jQuery, Popper.js, Bootstrap -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
+    <script>
+      // 初始化 Lottie 動畫
+      var loader = document.getElementById("loader");
+      lottie.loadAnimation({
+        container: document.querySelector(".lottie-animation"),
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        path: '{{ url_for("static", filename="animations/loader.json") }}',
+      });
+
+      // 當頁面載入完成時，隱藏 Loader 並顯示主內容
+      window.addEventListener("load", function () {
+        loader.style.display = "none"; // 隱藏 Loader
+        const content = document.getElementById("content");
+        content.style.display = "block"; // 顯示內容
+        setTimeout(() => content.classList.add("visible"), 50); // 平滑淡入效果
+      });
+    </script>
+  </body>
 </html>

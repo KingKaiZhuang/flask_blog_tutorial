@@ -1,22 +1,31 @@
 {% extends "layout.html" %} {% block content %}
+<!-- 顯示用戶的文章數量 -->
 <h1 class="mb-3">Posts by {{ user.username }} ({{ posts.total }})</h1>
+
+<!-- 迭代用戶的文章列表 -->
 {% for post in posts.items %}
 <article class="media content-section">
+  <!-- 顯示文章作者的頭像 -->
   <img
     class="rounded-circle article-img"
     src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}"
   />
   <div class="media-body">
+    <!-- 文章元數據 -->
     <div class="article-metadata">
+      <!-- 作者名稱，點擊跳轉到該作者的文章列表 -->
       <a
         class="mr-2"
         href="{{ url_for('users.user_posts', username=post.author.username) }}"
         >{{ post.author.username }}</a
       >
+      <!-- 發佈日期，格式為 YYYY-MM-DD -->
       <small class="text-muted"
         >{{ post.date_posted.strftime('%Y-%m-%d') }}</small
       >
     </div>
+
+    <!-- 文章標題與連結 -->
     <h2>
       <a
         class="article-title"
@@ -24,21 +33,29 @@
         >{{ post.title }}</a
       >
     </h2>
+
+    <!-- 文章內容摘要 -->
     <p class="article-content">{{ post.content }}</p>
   </div>
 </article>
-{% endfor %} {% for page_num in posts.iter_pages(left_edge=1, right_edge=1,
-left_current=1, right_current=2) %} {% if page_num %} {% if posts.page ==
-page_num %}
+{% endfor %}
+
+<!-- 分頁導航 -->
+{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1,
+right_current=2) %} {% if page_num %} {% if posts.page == page_num %}
+<!-- 當前頁按鈕，使用實心樣式 -->
 <a
   class="btn btn-info mb-4"
   href="{{ url_for('users.user_posts', username=user.username, page=page_num) }}"
   >{{ page_num }}</a
 >
 {% else %}
+<!-- 其他頁按鈕，使用輪廓樣式 -->
 <a
   class="btn btn-outline-info mb-4"
   href="{{ url_for('users.user_posts', username=user.username, page=page_num) }}"
   >{{ page_num }}</a
 >
-{% endif %} {% else %} ... {% endif %} {% endfor %} {% endblock content %}
+{% endif %} {% else %}
+<!-- 分頁間隔，顯示為省略號 -->
+... {% endif %} {% endfor %} {% endblock content %}

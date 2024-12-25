@@ -1,26 +1,35 @@
 {% extends "layout.html" %} {% block content %}
+<!-- 文章展示區塊 -->
 <article class="media content-section">
+  <!-- 作者頭像 -->
   <img
     class="rounded-circle article-img"
     src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}"
   />
   <div class="media-body">
+    <!-- 文章元數據 -->
     <div class="article-metadata">
+      <!-- 作者名稱，點擊跳轉到該作者的文章列表頁 -->
       <a
         class="mr-2"
         href="{{ url_for('users.user_posts', username=post.author.username) }}"
         >{{ post.author.username }}</a
       >
+      <!-- 發佈日期，格式為 YYYY-MM-DD -->
       <small class="text-muted"
         >{{ post.date_posted.strftime('%Y-%m-%d') }}</small
       >
+
+      <!-- 如果當前用戶是文章作者，顯示操作按鈕 -->
       {% if post.author == current_user %}
       <div>
+        <!-- 更新按鈕，跳轉到文章更新頁 -->
         <a
           class="btn btn-secondary btn-sm mt-1 mb-1"
           href="{{ url_for('posts.update_post', post_id=post.id) }}"
           >Update</a
         >
+        <!-- 刪除按鈕，觸發刪除確認模態框 -->
         <button
           type="button"
           class="btn btn-danger btn-sm m-1"
@@ -32,11 +41,15 @@
       </div>
       {% endif %}
     </div>
+
+    <!-- 文章標題 -->
     <h2 class="article-title">{{ post.title }}</h2>
+    <!-- 文章內容 -->
     <p class="article-content">{{ post.content }}</p>
   </div>
 </article>
-<!-- Modal -->
+
+<!-- 刪除確認模態框 -->
 <div
   class="modal fade"
   id="deleteModal"
@@ -47,6 +60,7 @@
 >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <!-- 模態框標題 -->
       <div class="modal-header">
         <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
         <button
@@ -58,10 +72,13 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <!-- 模態框底部，包含關閉和刪除按鈕 -->
       <div class="modal-footer">
+        <!-- 關閉按鈕 -->
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Close
         </button>
+        <!-- 刪除按鈕 -->
         <form
           action="{{ url_for('posts.delete_post', post_id=post.id) }}"
           method="POST"

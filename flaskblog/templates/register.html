@@ -1,64 +1,87 @@
 {% extends "layout.html" %} {% block content %}
 <div class="content-section">
+  <!-- 用戶註冊表單 -->
   <form method="POST" action="">
+    <!-- CSRF 保護 -->
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4">Join Today</legend>
+
+      <!-- 用戶名欄位 -->
       <div class="form-group">
         {{ form.username.label(class="form-control-label") }} {% if
-        form.username.errors %} {{ form.username(class="form-control
-        form-control-lg is-invalid") }}
+        form.username.errors %}
+        <!-- 如果有驗證錯誤，顯示紅色框線與錯誤訊息 -->
+        {{ form.username(class="form-control form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.username.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.username(class="form-control form-control-lg") }} {%
-        endif %}
+        {% else %}
+        <!-- 如果沒有錯誤，顯示正常的輸入框 -->
+        {{ form.username(class="form-control form-control-lg") }} {% endif %}
       </div>
+
+      <!-- 電子郵件欄位 -->
       <div class="form-group">
         {{ form.email.label(class="form-control-label") }} {% if
-        form.email.errors %} {{ form.email(class="form-control form-control-lg
-        is-invalid") }}
+        form.email.errors %}
+        <!-- 如果有驗證錯誤，顯示紅色框線與錯誤訊息 -->
+        {{ form.email(class="form-control form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.email.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.email(class="form-control form-control-lg") }} {%
-        endif %}
+        {% else %}
+        <!-- 如果沒有錯誤，顯示正常的輸入框 -->
+        {{ form.email(class="form-control form-control-lg") }} {% endif %}
       </div>
+
+      <!-- 密碼欄位 -->
       <div class="form-group">
         {{ form.password.label(class="form-control-label") }} {% if
-        form.password.errors %} {{ form.password(class="form-control
-        form-control-lg is-invalid") }}
+        form.password.errors %}
+        <!-- 如果有驗證錯誤，顯示紅色框線與錯誤訊息 -->
+        {{ form.password(class="form-control form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.password.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.password(class="form-control form-control-lg") }} {%
-        endif %}
+        {% else %}
+        <!-- 如果沒有錯誤，顯示正常的輸入框 -->
+        {{ form.password(class="form-control form-control-lg") }} {% endif %}
       </div>
+
+      <!-- 確認密碼欄位 -->
       <div class="form-group">
         {{ form.confirm_password.label(class="form-control-label") }} {% if
-        form.confirm_password.errors %} {{
-        form.confirm_password(class="form-control form-control-lg is-invalid")
-        }}
+        form.confirm_password.errors %}
+        <!-- 如果有驗證錯誤，顯示紅色框線與錯誤訊息 -->
+        {{ form.confirm_password(class="form-control form-control-lg
+        is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.confirm_password.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.confirm_password(class="form-control
-        form-control-lg") }} {% endif %}
+        {% else %}
+        <!-- 如果沒有錯誤，顯示正常的輸入框 -->
+        {{ form.confirm_password(class="form-control form-control-lg") }} {%
+        endif %}
       </div>
     </fieldset>
+
+    <!-- 提交按鈕 -->
     <div class="form-group">
       {{ form.submit(class="btn btn-outline-info") }}
     </div>
   </form>
 </div>
+
+<!-- 登入提示 -->
 <div class="border-top pt-3">
   <small class="text-muted">
     Already Have An Account?
